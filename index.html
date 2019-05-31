@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="./resources/fontawesome/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?version=2">
+  </head>
+  <body>
+    <table style="width:100%">
+      <tr>
+        <th>
+          <center><h1>spotitude</h1></center>
+        </th>
+      </tr>
+      <tr>
+        <th>
+          <center><p>Get your current top 25 tracks on Spotify and share them with other music fans.</p></center>
+        </th>
+      </tr>
+      <tr>
+        <th>
+          <main id="app">
+            <template v-if="visData">
+              <center>
+                <table>
+                  <row v-for="item in visData" v-bind:covers="item.covers" v-bind:tracks="item.tracks"></row>
+                </table>
+              </center>
+            </template>
+            <template v-else>
+              <center>
+                <table>
+                  <tr>
+                    <td style="padding:100px">
+                      <button @click="login">Login with Spotify</button>
+                    </td>
+                  </tr>
+                </table>
+              </center>
+            </template>
+          </main>
+        </th>
+      </tr>
+    </table>
+    <footer>
+      <center>
+        <a href="https://github.com/dtcrout/spotitude-webapp"><i class="fab fa-github"></i></a>
+      </center>
+    </footer>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
