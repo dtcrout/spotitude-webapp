@@ -47,7 +47,7 @@ var app = new Vue({
   data: {
     client_id: 'c931a0d9f79848a3813338b5598a2369',
     scopes: 'user-top-read',
-    redirect_uri: 'https://spotitude.netlify.com',
+    redirect_uri: 'https://spotitude.me',
     // redirect_uri: 'http://localhost:8000',
     type: 'tracks',
     time_range: 'short_term',
