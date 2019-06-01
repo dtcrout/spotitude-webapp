@@ -14,7 +14,7 @@ function parseData(obj) {
     if (i % 5 === 0 && i !== 0) {
       var row = {"covers": albumArtGroup, "tracks": trackTitlesGroup};
       data.push(row);
-      var trackGroup = [];
+      var trackTitlesGroup = [];
       var albumArtGroup = [];
     }
 
