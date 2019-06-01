@@ -1,61 +1,35 @@
-function getAlbumArt(obj) {
-  // Get album art paths from JSON and store in array
-  var albumArtArr = [];
+function parseData(obj) {
+  // Get album art and track titles and store in JSON
+  var data = [];
   var albumArtGroup = [];
+  var trackTitlesGroup = [];
 
   for (i = 0; i < 25; i++) {
+    // Get album art and track titles from JSON
     var albumArt = obj['items'][i]['album']['images'][1]['url'];
-
-    if (i % 5 === 0 && i !== 0) {
-      albumArtArr.push(albumArtGroup)
-      var albumArtGroup = [];
-    }
-
-    albumArtGroup.push(albumArt);
-  }
-
-  albumArtArr.push(albumArtGroup)
-
-  return albumArtArr
-}
-
-function getTrackTitles(obj) {
-  // Get track titles from JSON and store in subarrays of size 5
-  var trackArr = [];
-  var trackGroup = [];
-
-  for (i = 0; i < 25; i++) {
     var artist = obj['items'][i]['album']['artists'][0]['name'];
     var title = obj['items'][i]['name'];
     var track = artist + ' - ' + title;
 
     if (i % 5 === 0 && i !== 0) {
-      trackArr.push(trackGroup)
+      var row = {"covers": albumArtGroup, "tracks": trackTitlesGroup};
+      data.push(row);
       var trackGroup = [];
+      var albumArtGroup = [];
     }
 
-    trackGroup.push(track)
+    albumArtGroup.push(albumArt);
+    trackTitlesGroup.push(track)
   }
 
-  trackArr.push(trackGroup)
+  var row = {"covers": albumArtGroup, "tracks": trackTitlesGroup};
+  data.push(row);
 
-  return trackArr;
-}
-
-function makeData(covers, tracks) {
-  var dataList = [];
-
-  for (i = 0; i < 5; i++) {
-    var data = new Object();
-    data.covers = covers[i];
-    data.tracks = tracks[i];
-    dataList.push(data);
-  }
-
-  return dataList
+  return data
 }
 
 Vue.component('row', {
+  // Row entry for table
   props: ['covers', 'tracks'],
   template:
     '<tr>' +
@@ -74,13 +48,11 @@ var app = new Vue({
     client_id: 'c931a0d9f79848a3813338b5598a2369',
     scopes: 'user-top-read',
     redirect_uri: 'https://spotitude.netlify.com',
+    // redirect_uri: 'http://localhost:8000',
     type: 'tracks',
     time_range: 'short_term',
     limit: '25',
-    uri: 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=25',
-    albumArt: null,
-    trackTitles: null,
-    visData: null
+    data: null
   },
   methods: {
     login: function() {
@@ -89,16 +61,16 @@ var app = new Vue({
       window.spotifyCallback = (payload) => {
         popup.close()
 
-        fetch(this.uri, {
+        var uri = `https://api.spotify.com/v1/me/top/tracks?time_range=${this.time_range}&limit=${this.limit}`;
+
+        fetch(uri, {
           headers: {
             'Authorization': `Bearer ${payload}`
           }
         }).then(response => {
           return response.json()
         }).then(data => {
-          this.albumArt = getAlbumArt(data)
-          this.trackTitles = getTrackTitles(data)
-          this.visData = makeData(this.albumArt, this.trackTitles)
+          this.data = parseData(data)
         })
       }
     }

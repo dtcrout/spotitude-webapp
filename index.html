@@ -3,7 +3,7 @@
   <head>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="./resources/fontawesome/css/all.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?version=2">
+    <link rel="stylesheet" href="styles.css?version=3">
   </head>
   <body>
     <table style="width:100%">
@@ -14,16 +14,16 @@
       </tr>
       <tr>
         <th>
-          <center><p>Get your current top 25 tracks on Spotify and share them with other music fans.</p></center>
+          <center><p>Get your current top 25 tracks on Spotify and share them with other music fans!</p></center>
         </th>
       </tr>
       <tr>
         <th>
           <main id="app">
-            <template v-if="visData">
+            <template v-if="data">
               <center>
                 <table>
-                  <row v-for="item in visData" v-bind:covers="item.covers" v-bind:tracks="item.tracks"></row>
+                  <row v-for="item in data" v-bind:covers="item.covers" v-bind:tracks="item.tracks"></row>
                 </table>
               </center>
             </template>
@@ -31,7 +31,7 @@
               <center>
                 <table>
                   <tr>
-                    <td style="padding:100px">
+                    <td style="padding:200px">
                       <button @click="login">Login with Spotify</button>
                     </td>
                   </tr>

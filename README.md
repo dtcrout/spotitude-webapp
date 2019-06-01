@@ -1,3 +1,3 @@
 # spotitude-webapp
 
-Get your current top 25 tracks on Spotify and share them with other music fans.
+Spotitude is a simple web-app which displays your recent top 25 tracks on Spotify. It's client side and the source code is available here!
