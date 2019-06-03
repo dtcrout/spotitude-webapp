@@ -2,6 +2,8 @@
 
 https://spotitude.me/
 
-Spotitude is a simple web-app which displays your recent top 25 tracks on Spotify. It's client side and the source code is available here!
+Spotitude is a simple web app which displays your recent top 25 tracks on Spotify. It's client side and the source code is available here!
+
+This web app is a JS version of the code found [here](https://github.com/dtcrout/spotitude).
 
 Made with [Vue.js](https://vuejs.org/).
