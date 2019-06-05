@@ -30,13 +30,15 @@ function parseData(obj) {
 
 function getTrackIds(obj) {
   // Get track IDs for top tracks
-  var trackList = [];
+  var trackList = '';
 
   for (i = 0; i < 25; i++) {
-    var artist = obj['items'][i]['album']['artists'][0]['name'];
-    var title = obj['items'][i]['name'];
     var trackId = obj['items'][i]['id'];
-    trackList.push({"artist": artist, "track": title, "trackId": trackId})
+    if (i === 24) {
+      trackList += 'spotify:track:' + trackId;
+    } else {
+      trackList += 'spotify:track:' + trackId + ',';
+    }
   }
 
   return trackList
