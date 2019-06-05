@@ -28,6 +28,20 @@ function parseData(obj) {
   return data
 }
 
+function getTrackIds(obj) {
+  // Get track IDs for top tracks
+  var trackList = [];
+
+  for (i = 0; i < 25; i++) {
+    var artist = obj['items'][i]['album']['artists'][0]['name'];
+    var title = obj['items'][i]['name'];
+    var trackId = obj['items'][i]['id'];
+    trackList.push({"artist": artist, "track": title, "trackId": trackId})
+  }
+
+  return trackList
+}
+
 Vue.component('row', {
   // Row entry for table
   props: ['covers', 'tracks'],
@@ -47,15 +61,19 @@ var app = new Vue({
   data: {
     client_id: 'c931a0d9f79848a3813338b5598a2369',
     scopes: 'user-top-read',
-    redirect_uri: 'https://spotitude.me',
-//     redirect_uri: 'http://localhost:8000',
+    // redirect_uri: 'https://spotitude.me',
+    redirect_uri: 'http://localhost:8000',
     type: 'tracks',
     time_ranges: ['short_term', 'medium_term', 'long_term'],
     limit: '25',
     display: null,
+    tracks: null,
     short_term_data: null,
     medium_term_data: null,
-    long_term_data: null
+    long_term_data: null,
+    short_term_tracks: null,
+    medium_term_tracks: null,
+    long_term_tracks: null
   },
   methods: {
     login: function() {
@@ -77,6 +95,9 @@ var app = new Vue({
         }).then(data => {
           this.short_term_data = parseData(data)
           this.display = this.short_term_data
+
+          this.short_term_tracks = getTrackIds(data)
+          this.tracks = this.short_term_tracks
         })
 
         fetch(medium_uri, {
@@ -87,6 +108,7 @@ var app = new Vue({
           return response.json()
         }).then(data => {
           this.medium_term_data = parseData(data)
+          this.medium_term_tracks = getTrackIds(data)
         })
 
         fetch(long_uri, {
@@ -97,18 +119,22 @@ var app = new Vue({
           return response.json()
         }).then(data => {
           this.long_term_data = parseData(data)
+          this.long_term_tracks = getTrackIds(data)
         })
       }
     },
-    short_term: function() {
+    shortTerm: function() {
       this.display = this.short_term_data
+      this.tracks = this.short_term_tracks
     },
-    medium_term: function() {
+    mediumTerm: function() {
       this.display = this.medium_term_data
+      this.tracks = this.medium_term_tracks
     },
-    long_term: function() {
+    longTerm: function() {
       this.display = this.long_term_data
-    },
+      this.tracks = this.long_term_tracks
+    }
   },
   mounted: function() {
     this.token = window.location.hash.substr(1).split('&')[0].split("=")[1]
