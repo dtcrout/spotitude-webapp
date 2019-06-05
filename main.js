@@ -47,33 +47,68 @@ var app = new Vue({
   data: {
     client_id: 'c931a0d9f79848a3813338b5598a2369',
     scopes: 'user-top-read',
-    redirect_uri: 'https://spotitude.me',
-    // redirect_uri: 'http://localhost:8000',
+    // redirect_uri: 'https://spotitude.me',
+    redirect_uri: 'http://localhost:8000',
     type: 'tracks',
-    time_range: 'short_term',
+    time_ranges: ['short_term', 'medium_term', 'long_term'],
     limit: '25',
-    data: null
+    display: null,
+    short_term_data: null,
+    medium_term_data: null,
+    long_term_data: null
   },
   methods: {
     login: function() {
-      let popup = window.open(`https://accounts.spotify.com/authorize?client_id=${this.client_id}&response_type=token&redirect_uri=${this.redirect_uri}&scope=${this.scopes}&show_dialog=true`, 'Login with Spotify', 'width=800,height=600')
+      let popup = window.open(`https://accounts.spotify.com/authorize?client_id=${this.client_id}&response_type=token&redirect_uri=${this.redirect_uri}&scope=${this.scopes}&show_dialog=true`, 'Login with Spotify')
 
       window.spotifyCallback = (payload) => {
         popup.close()
 
-        var uri = `https://api.spotify.com/v1/me/top/tracks?time_range=${this.time_range}&limit=${this.limit}`;
+        var short_uri = `https://api.spotify.com/v1/me/top/tracks?time_range=${this.time_ranges[0]}&limit=${this.limit}`;
+        var medium_uri = `https://api.spotify.com/v1/me/top/tracks?time_range=${this.time_ranges[1]}&limit=${this.limit}`;
+        var long_uri = `https://api.spotify.com/v1/me/top/tracks?time_range=${this.time_ranges[2]}&limit=${this.limit}`;
 
-        fetch(uri, {
+        fetch(short_uri, {
           headers: {
             'Authorization': `Bearer ${payload}`
           }
         }).then(response => {
           return response.json()
         }).then(data => {
-          this.data = parseData(data)
+          this.short_term_data = parseData(data)
+          this.display = this.short_term_data
+        })
+
+        fetch(medium_uri, {
+          headers: {
+            'Authorization': `Bearer ${payload}`
+          }
+        }).then(response => {
+          return response.json()
+        }).then(data => {
+          this.medium_term_data = parseData(data)
+        })
+
+        fetch(long_uri, {
+          headers: {
+            'Authorization': `Bearer ${payload}`
+          }
+        }).then(response => {
+          return response.json()
+        }).then(data => {
+          this.long_term_data = parseData(data)
         })
       }
-    }
+    },
+    short_term: function() {
+      this.display = this.short_term_data
+    },
+    medium_term: function() {
+      this.display = this.medium_term_data
+    },
+    long_term: function() {
+      this.display = this.long_term_data
+    },
   },
   mounted: function() {
     this.token = window.location.hash.substr(1).split('&')[0].split("=")[1]

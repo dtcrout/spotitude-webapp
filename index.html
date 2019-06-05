@@ -2,7 +2,6 @@
 <html>
   <head>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link href="./resources/fontawesome/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css?version=1">
   </head>
   <body>
@@ -14,16 +13,23 @@
       </tr>
       <tr>
         <th>
-          <center><p>Get your current top 25 tracks on Spotify and share them with other music fans!</p></center>
+          <center><p>Get your top 25 tracks on Spotify and share them with other music fans!</p></center>
         </th>
       </tr>
       <tr>
         <th>
           <main id="app">
-            <template v-if="data">
+            <template v-if="display">
               <center>
                 <table>
-                  <row v-for="item in data" v-bind:covers="item.covers" v-bind:tracks="item.tracks"></row>
+                  <row v-for="item in display" v-bind:covers="item.covers" v-bind:tracks="item.tracks"></row>
+                  <tr>
+                    <button class="small" @click="short_term">Last 4 weeks</button>
+                    <a></a>
+                    <button class="small" @click="medium_term">Last 6 months</button>
+                    <a></a>
+                    <button class="small" @click="long_term">All time</button>
+                  </tr>
                 </table>
               </center>
             </template>
@@ -44,7 +50,9 @@
     </table>
     <footer>
       <center>
-        <a href="https://github.com/dtcrout/spotitude-webapp"><i class="fab fa-github"></i></a>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="https://github.com/dtcrout/spotitude-webapp">GitHub</a>
       </center>
     </footer>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
