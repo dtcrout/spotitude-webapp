@@ -67,7 +67,7 @@ var app = new Vue({
       'user-read-birthdate'
     ],
     redirect_uri: 'https://spotitude.me',
-//     redirect_uri: 'http://localhost:8000',
+    // redirect_uri: 'http://localhost:8000',
     type: 'tracks',
     time_ranges: ['short_term', 'medium_term', 'long_term'],
     limit: '25',
@@ -160,9 +160,9 @@ var app = new Vue({
         popup.close()
 
         var createPlaylistBody = {
-          "name": "spotitude " + this.state,
-          "description": "Top 25 tracks for " + this.state + ". Generated my spotitude.me",
-          "public": true
+          'name': 'spotitude ' + this.state,
+          'description': 'Top 25 tracks for ' + this.state + '. Generated my spotitude.me',
+          'public': true
         }
 
         fetch(`https://api.spotify.com/v1/me`, {
@@ -198,7 +198,7 @@ var app = new Vue({
             })
             return playlistId
           }).then(playlistId => {
-              let playlistPopup = window.open(`https://open.spotify.com/playlist/${playlistId}`);
+              let playlistPopup = window.open(`https://open.spotify.com/playlist/${playlistId}`)
           })
         })
       }
