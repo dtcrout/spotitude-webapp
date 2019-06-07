@@ -66,8 +66,8 @@ var app = new Vue({
       'user-read-email',
       'user-read-birthdate'
     ],
-    // redirect_uri: 'https://spotitude.me',
-    redirect_uri: 'http://localhost:8000',
+    redirect_uri: 'https://spotitude.me',
+//     redirect_uri: 'http://localhost:8000',
     type: 'tracks',
     time_ranges: ['short_term', 'medium_term', 'long_term'],
     limit: '25',
