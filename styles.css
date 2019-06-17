@@ -1,5 +1,6 @@
 html, body {
-  background-image: url("./resources/images/memphis-mini-dark.png");
+  background-image: url("./resources/images/memphis-mini-dark.png?v=420");
+  background-color: #000000;
   background-repeat: repeat;
   height: 100%;
   margin: 0;
