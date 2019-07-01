@@ -25,6 +25,11 @@ a {
   padding-left: 12px;
 }
 
+img {
+  height: 120px;
+  width: auto;
+}
+
 button {
   background-color: #1DB954;
   border: none;
