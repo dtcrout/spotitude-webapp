@@ -45,11 +45,11 @@ Vue.component('row', {
   props: ['covers', 'tracks'],
   template:
     '<tr>' +
-    '<td><img :src=covers[0] style="height:40%;"></td>' +
-    '<td><img :src=covers[1] style="height:40%;"></td>' +
-    '<td><img :src=covers[2] style="height:40%;"></td>' +
-    '<td><img :src=covers[3] style="height:40%;"></td>' +
-    '<td><img :src=covers[4] style="height:40%;"></td>' +
+    '<td><img :src=covers[0]></td>' +
+    '<td><img :src=covers[1]></td>' +
+    '<td><img :src=covers[2]></td>' +
+    '<td><img :src=covers[3]></td>' +
+    '<td><img :src=covers[4]></td>' +
     '<td valign="top" align="left"><p>{{tracks[0]}}<br>{{tracks[1]}}<br>{{tracks[2]}}<br>{{tracks[3]}}<br>{{tracks[4]}}<br></p></td>' +
     '</tr>'
 })
